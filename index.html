@@ -64,7 +64,7 @@
         background-image: url("./patrick-bateman-business-card.webp");
         background-size: cover;
         background-position: center;
-        opacity: 0.7;
+        opacity: 0.5;
         mix-blend-mode: multiply;
         pointer-events: none;
         z-index: 0;
@@ -117,39 +117,48 @@
       }
 
       .card__center {
-        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 6px;
         letter-spacing: 0.1em;
         color: rgba(32, 29, 25, 0.85);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% - 56px);
       }
 
       .card__person {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 2px;
+        font-size: 18.5px;
+        margin-left: -4.8px;
       }
 
       .card__person-first {
-        font-size: 22px;
-        letter-spacing: 0.2em;
         font-variant: small-caps;
+        letter-spacing: 0.01em;
+      }
+
+      .card__person-first-rest {
+        letter-spacing: -0.01em;
+        margin-left: -6px;
       }
 
       .card__person-last {
-        font-size: 30px;
-        letter-spacing: 0.22em;
         text-transform: uppercase;
+        letter-spacing: 0.036em;
       }
 
       .card__title {
-        font-size: 18px;
-        letter-spacing: 0.16em;
         font-variant: small-caps;
+        font-size: 19px;
+        letter-spacing: -0.02em;
       }
 
       .card__bottom {
@@ -212,7 +221,10 @@
           </div>
           <div class="card__center">
             <div class="card__person">
-              <span class="card__person-first">Patrick</span>
+              <span class="card__person-first"
+                >P
+                <span class="card__person-first-rest">atrick</span>
+              </span>
               <span class="card__person-last">BATEMAN</span>
             </div>
             <span class="card__title">Vice President</span>
