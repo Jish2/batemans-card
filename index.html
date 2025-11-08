@@ -17,6 +17,7 @@
         color-scheme: only light;
         font-family: "Garamond Classico SC", "EB Garamond", "Garamond",
           "Apple Garamond", Baskerville, "Times New Roman", serif;
+        --card-scale: 0.6;
       }
 
       * {
@@ -70,7 +71,7 @@
         background-image: url("./patrick-bateman-business-card.webp");
         background-size: cover;
         background-position: center;
-        opacity: 0.5;
+        opacity: 0;
         mix-blend-mode: multiply;
         pointer-events: none;
         z-index: 0;
@@ -110,42 +111,49 @@
       .card__bottom {
         display: flex;
         justify-content: space-between;
-        font-size: 15px;
-        letter-spacing: 0.08em;
         color: rgba(36, 33, 28, 0.78);
       }
 
       .card__phone {
         align-self: flex-start;
         margin-right: 40px;
-        font-size: 18px;
-        letter-spacing: 0.03em;
+        font-size: calc(34px * var(--card-scale));
+        letter-spacing: -0.07em;
       }
-
       .card__company {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0;
         text-align: right;
-        line-height: 1.08;
       }
-
-      .card__company-name {
-        font-size: 16.5px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+      .card__company-line {
+        display: flex;
+        align-items: baseline;
+        gap: calc(1px * var(--card-scale));
       }
-
+      .card__company-word {
+        font-size: calc(34px * var(--card-scale));
+        letter-spacing: 0.02em;
+      }
+      .card__company-ampersand {
+        font-size: calc(29px * var(--card-scale));
+        letter-spacing: 0.02em;
+        transform: translateY(calc(-2px * var(--card-scale)));
+      }
       .card__company-tagline {
-        font-size: 12.5px;
-        letter-spacing: 0.12em;
+        font-size: calc(20px * var(--card-scale));
+        letter-spacing: 0.01em;
         font-variant: small-caps;
+        margin-top: -6px;
       }
-
       .card__center {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 6px;
-        letter-spacing: 0.1em;
+        gap: calc(10px * var(--card-scale));
+        letter-spacing: 0;
         color: rgba(32, 29, 25, 0.85);
         position: absolute;
         top: 50%;
@@ -153,67 +161,66 @@
         transform: translate(-50%, -50%);
         width: calc(100% - 56px);
       }
-
       .card__person {
         display: flex;
         flex-direction: row;
         align-items: baseline;
-        gap: 2px;
-        font-size: 19.5px;
-        margin-left: -4.8px;
+        gap: calc(6px * var(--card-scale));
+        margin-left: calc(-6px * var(--card-scale));
       }
-
       .card__person-first {
+        font-size: calc(34px * var(--card-scale));
         font-variant: small-caps;
-        letter-spacing: 0.01em;
+        letter-spacing: -0.015em;
       }
-
       .card__person-first-rest {
-        letter-spacing: -0.01em;
-        margin-left: -6px;
+        letter-spacing: -0.02em;
+        margin-left: calc(-4px * var(--card-scale));
       }
-
       .card__person-last {
+        font-size: calc(34px * var(--card-scale));
+        letter-spacing: -0.01em;
         text-transform: uppercase;
-        letter-spacing: 0.036em;
       }
-
       .card__title {
         font-variant: small-caps;
-        font-size: 19px;
-        letter-spacing: -0.02em;
-      }
-
-      .card__bottom {
-        font-size: 13.5px;
-        font-variant: small-caps;
-        letter-spacing: 0.12em;
-        white-space: nowrap;
-        margin-left: -8px;
-      }
-
-      .card__bottom-line {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-      .card__bottom-address {
-        letter-spacing: 0.02em;
-        word-spacing: -0.18em;
-      }
-      .card__bottom-label {
-        font-size: 9px;
+        font-size: calc(34px * var(--card-scale));
         letter-spacing: -0.01em;
       }
-      .card__bottom-value {
-        font-size: 14px;
-        letter-spacing: 0.02em;
+      .card__bottom {
+        font-size: calc(26px * var(--card-scale));
+        font-variant: small-caps;
+        letter-spacing: 0;
+        white-space: nowrap;
+        margin-left: calc(-12px * var(--card-scale));
       }
-      .card__bottom-separator {
-        letter-spacing: 0.1em;
-        opacity: 0.55;
-        font-size: 0.9em;
-        transform: translateY(-0.4px);
+      .card__bottom-line {
+        display: inline-flex;
+        align-items: baseline;
+        gap: calc(10px * var(--card-scale));
+      }
+      .card__bottom-address {
+        letter-spacing: -0.04em;
+        word-spacing: -0.18em;
+      }
+      .card__bottom-contact {
+        display: inline-flex;
+        align-items: baseline;
+        gap: calc(6px * var(--card-scale));
+      }
+      .card__bottom-label {
+        font-size: calc(28px * var(--card-scale));
+        letter-spacing: -0.07em;
+      }
+      .card__bottom-label--telex {
+        letter-spacing: -0.06em;
+      }
+      .card__bottom-value {
+        font-size: calc(28px * var(--card-scale));
+        letter-spacing: -0.07em;
+      }
+      .card__bottom-value--telex {
+        letter-spacing: -0.06em;
       }
 
       .card::before {
@@ -266,12 +273,14 @@
         <div class="card__inner">
           <div class="card__top">
             <span class="card__phone card__inline engraved-tight"
-              >2125556342</span
+              >212 555 6342</span
             >
             <div class="card__company">
-              <span class="card__company-name engraved-text"
-                >Pierce &amp; Pierce</span
-              >
+              <div class="card__company-line">
+                <span class="card__company-word engraved-text">Pierce</span>
+                <span class="card__company-ampersand engraved-text">&amp;</span>
+                <span class="card__company-word engraved-text">Pierce</span>
+              </div>
               <span class="card__company-tagline engraved-text"
                 >Mergers and Acquisitions</span
               >
@@ -280,23 +289,35 @@
           <div class="card__center">
             <div class="card__person">
               <span class="card__person-first engraved-text"
-                >P
-                <span class="card__person-first-rest engraved-text"
+                >P<span class="card__person-first-rest engraved-text"
                   >atrick</span
-                >
-              </span>
+                ></span
+              >
               <span class="card__person-last engraved-text">BATEMAN</span>
             </div>
             <span class="card__title engraved-text">Vice President</span>
           </div>
           <div class="card__bottom">
             <span class="card__inline engraved-text card__bottom-line">
-              <span class="card__bottom-address"
+              <span class="card__bottom-address engraved-text"
                 >358 Exchange Place, New York, N.Y. 100099</span
               >
-              <span class="card__bottom-separator card__bottom-dot">•</span>
-              <span class="card__bottom-value">fax2125556390</span>
-              <span class="card__bottom-value">telex104534</span>
+              <span class="card__bottom-contact card__bottom-contact--fax">
+                <span class="card__bottom-label engraved-text">fax</span>
+                <span class="card__bottom-value engraved-text"
+                  >212 555 6390</span
+                >
+              </span>
+              <span class="card__bottom-contact card__bottom-contact--telex">
+                <span
+                  class="card__bottom-label card__bottom-label--telex engraved-text"
+                  >telex</span
+                >
+                <span
+                  class="card__bottom-value card__bottom-value--telex engraved-text"
+                  >10 4534</span
+                >
+              </span>
             </span>
           </div>
         </div>
