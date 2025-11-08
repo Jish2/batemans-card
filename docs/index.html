@@ -3,21 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bateman Business Card</title>
+    <title>Bateman Card Builder</title>
     <style>
-      @font-face {
-        font-family: "Garamond Classico SC";
-        src: url("./Garamond Classico SC.ttf") format("truetype");
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-      }
-
       :root {
         color-scheme: only light;
-        font-family: "Garamond Classico SC", "EB Garamond", "Garamond",
-          "Apple Garamond", Baskerville, "Times New Roman", serif;
-        --card-scale: 0.6;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Helvetica Neue", Arial, sans-serif;
+        background: #0e1012;
       }
 
       * {
@@ -29,397 +21,547 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        background: #ffffff;
-        color: #2f2b25;
-        overflow-x: hidden;
+        background: radial-gradient(circle at 10% 10%, #171a1d, #090a0b 62%);
+        color: #f8fafc;
       }
 
-      .promo-banner {
-        margin-top: 24px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New",
-          monospace;
-        font-size: 14px;
-        color: #a1a6aa;
-        text-decoration: underline;
-        letter-spacing: 0.04em;
-        text-transform: lowercase;
-        text-align: center;
-      }
-
-      .promo-banner:hover {
-        color: #898e93;
-      }
-
-      .card-shell {
+      main {
         flex: 1;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px 0 48px;
+        display: grid;
+        grid-template-columns: minmax(300px, 360px) 1fr;
+        gap: 32px;
+        padding: 32px clamp(24px, 4vw, 64px);
       }
 
-      .card-scene {
-        perspective: 1200px;
-        width: min(100%, 960px);
-        height: max(420px, calc(100vh - 180px));
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      @media (max-width: 940px) {
+        main {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto;
+        }
       }
 
-      .card {
-        width: 480px;
-        height: calc(480px * 452 / 800);
-        padding: 24px 28px;
-        position: relative;
-        background: radial-gradient(
-          circle at 20% 15%,
-          rgba(255, 255, 255, 0.76),
-          rgba(249, 247, 236, 0.79) 42%,
-          #f7f6ed
-        );
-        border: 1.5px solid rgba(84, 78, 68, 0.2);
-        box-shadow: 0 16px 42px rgba(47, 43, 37, 0.16),
-          0 8px 18px rgba(47, 43, 37, 0.14);
-        transform-style: preserve-3d;
-        transition: transform 160ms ease-out, box-shadow 160ms ease-out;
-        will-change: transform, box-shadow;
-        isolation: isolate;
-        overflow: hidden;
+      h1 {
+        font-size: clamp(24px, 2.6vw, 32px);
+        margin: 0 0 8px;
       }
 
-      .card__overlay {
-        position: absolute;
-        inset: 0;
-        background-image: url("./texture.png");
-        background-size: cover;
-        background-position: center;
-        opacity: 0.5;
-        mix-blend-mode: multiply;
-        filter: contrast(0.98) brightness(1.04);
-        pointer-events: none;
-        z-index: 0;
+      p {
+        margin: 0 0 16px;
+        color: rgba(248, 250, 252, 0.72);
+        font-size: 14px;
+        line-height: 1.5;
       }
 
-      .card__inner {
-        position: relative;
-        z-index: 1;
-        height: 100%;
+      .panel {
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        background: rgba(12, 14, 16, 0.72);
+        backdrop-filter: blur(18px);
+        border-radius: 16px;
+        padding: clamp(20px, 3vw, 28px);
+        box-shadow: 0 20px 50px rgba(8, 11, 19, 0.6);
+      }
+
+      form {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 16px;
       }
 
-      .card__inline {
-        white-space: nowrap;
-      }
-
-      .engraved-text {
-        color: transparent;
-        background-color: #2c2925;
-        -webkit-background-clip: text;
-        background-clip: text;
-        text-shadow: -0.6px -0.7px 1.1px rgba(32, 26, 22, 0.55),
-          0.6px 0.75px 0 rgba(255, 255, 255, 0.28);
-      }
-      .engraved-tight {
-        color: transparent;
-        background-color: #302c29;
-        -webkit-background-clip: text;
-        background-clip: text;
-        text-shadow: -0.55px -0.65px 0.95px rgba(32, 26, 22, 0.5),
-          0.55px 0.65px 0 rgba(255, 255, 255, 0.26);
-      }
-
-      .card__top,
-      .card__bottom {
-        display: flex;
-        justify-content: space-between;
-        color: rgba(36, 33, 28, 0.78);
-      }
-
-      .card__phone {
-        align-self: flex-start;
-        margin-right: 40px;
-        font-size: calc(34px * var(--card-scale));
-        letter-spacing: -0.07em;
-      }
-      .card__company {
+      .field {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
-        gap: 0;
-        text-align: right;
-      }
-      .card__company-line {
-        display: flex;
-        align-items: baseline;
-        gap: calc(1px * var(--card-scale));
-      }
-      .card__company-word {
-        font-size: calc(34px * var(--card-scale));
-        letter-spacing: 0.02em;
-      }
-      .card__company-ampersand {
-        font-size: calc(29px * var(--card-scale));
-        letter-spacing: 0.02em;
-        transform: translateY(calc(-2px * var(--card-scale)));
-      }
-      .card__company-tagline {
-        font-size: calc(20px * var(--card-scale));
-        letter-spacing: 0.01em;
-        font-variant: small-caps;
-        margin-top: -6px;
-      }
-      .card__center {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: calc(10px * var(--card-scale));
-        letter-spacing: 0;
-        color: rgba(32, 29, 25, 0.85);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: calc(100% - 56px);
-      }
-      .card__person {
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        gap: calc(6px * var(--card-scale));
-        margin-left: calc(-6px * var(--card-scale));
-      }
-      .card__person-first {
-        font-size: calc(34px * var(--card-scale));
-        font-variant: small-caps;
-        letter-spacing: -0.015em;
-      }
-      .card__person-first-rest {
-        letter-spacing: -0.02em;
-        margin-left: calc(-4px * var(--card-scale));
-      }
-      .card__person-last {
-        font-size: calc(34px * var(--card-scale));
-        letter-spacing: -0.01em;
-        text-transform: uppercase;
-      }
-      .card__title {
-        font-variant: small-caps;
-        font-size: calc(34px * var(--card-scale));
-        letter-spacing: -0.01em;
-      }
-      .card__bottom {
-        font-size: calc(26px * var(--card-scale));
-        font-variant: small-caps;
-        letter-spacing: 0;
-        white-space: nowrap;
-        margin-left: calc(-12px * var(--card-scale));
-      }
-      .card__bottom-line {
-        display: inline-flex;
-        align-items: baseline;
-        gap: calc(10px * var(--card-scale));
-      }
-      .card__bottom-address {
-        letter-spacing: -0.04em;
-        word-spacing: -0.18em;
-      }
-      .card__bottom-contact {
-        display: inline-flex;
-        align-items: baseline;
-        gap: calc(6px * var(--card-scale));
-      }
-      .card__bottom-label {
-        font-size: calc(28px * var(--card-scale));
-        letter-spacing: -0.07em;
-      }
-      .card__bottom-label--telex {
-        letter-spacing: -0.06em;
-      }
-      .card__bottom-value {
-        font-size: calc(28px * var(--card-scale));
-        letter-spacing: -0.07em;
-      }
-      .card__bottom-value--telex {
-        letter-spacing: -0.06em;
+        gap: 6px;
       }
 
-      .card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background-image: radial-gradient(
-          circle at top left,
-          rgba(255, 255, 255, 0.9),
-          transparent 56%
-        );
-        mix-blend-mode: screen;
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background-image: repeating-linear-gradient(
-          135deg,
-          rgba(90, 84, 74, 0.028) 0px,
-          rgba(90, 84, 74, 0.028) 1px,
-          transparent 1px,
-          transparent 3px
-        );
-        opacity: 0.26;
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .card:hover {
-        box-shadow: 0 28px 70px rgba(47, 43, 37, 0.22);
-      }
-
-      .card__inline-telex {
+      label {
         font-size: 13px;
-        letter-spacing: 0.03em;
-        font-variant: small-caps;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: rgba(226, 232, 240, 0.78);
+      }
+
+      input[type="text"],
+      input[type="url"],
+      input[type="search"],
+      textarea {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(15, 17, 19, 0.9);
+        padding: 10px 12px;
+        color: #f8fafc;
+        font-size: 14px;
+        font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        resize: vertical;
+        min-height: 38px;
+      }
+
+      textarea {
+        min-height: 60px;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: rgba(94, 234, 212, 0.65);
+        box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.16);
+      }
+
+      .inline-controls {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .inline-controls input {
+        flex: 1;
+      }
+
+      button {
+        appearance: none;
+        border: none;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #38bdf8, #22d3ee);
+        color: #020617;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        padding: 12px 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: transform 0.14s ease, box-shadow 0.14s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 32px rgba(34, 211, 238, 0.32);
+      }
+
+      button:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      button:disabled,
+      button:disabled:hover,
+      button:disabled:active {
+        cursor: not-allowed;
+        opacity: 0.45;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .preview-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .preview-frame-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3 / 2;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        background: #111316;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #fff;
+      }
+
+      .status {
+        font-size: 13px;
+        color: rgba(148, 163, 184, 0.8);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status[data-state="error"] {
+        color: #f87171;
+      }
+
+      .status[data-state="ready"] {
+        color: #4ade80;
+      }
+
+      .loading {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .loading::before {
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        border: 2px solid rgba(148, 163, 184, 0.4);
+        border-top-color: rgba(148, 163, 184, 0.9);
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      small {
+        font-size: 12px;
+        color: rgba(148, 163, 184, 0.7);
+        line-height: 1.5;
       }
     </style>
   </head>
   <body>
-    <a class="promo-banner" href="https://card.jgoon.com"
-      >create your own bateman card here</a
-    >
-    <div class="card-shell">
-      <div class="card-scene">
-        <article class="card" data-card>
-          <div class="card__overlay" aria-hidden="true"></div>
-          <div class="card__inner">
-            <div class="card__top">
-              <span class="card__phone card__inline engraved-tight"
-                >212 555 6342</span
-              >
-              <div class="card__company">
-                <div class="card__company-line">
-                  <span class="card__company-word engraved-text">Pierce</span>
-                  <span class="card__company-ampersand engraved-text"
-                    >&amp;</span
-                  >
-                  <span class="card__company-word engraved-text">Pierce</span>
-                </div>
-                <span class="card__company-tagline engraved-text"
-                  >Mergers and Acquisitions</span
-                >
-              </div>
-            </div>
-            <div class="card__center">
-              <div class="card__person">
-                <span class="card__person-first engraved-text"
-                  >P<span class="card__person-first-rest engraved-text"
-                    >atrick</span
-                  ></span
-                >
-                <span class="card__person-last engraved-text">BATEMAN</span>
-              </div>
-              <span class="card__title engraved-text">Vice President</span>
-            </div>
-            <div class="card__bottom">
-              <span class="card__inline engraved-text card__bottom-line">
-                <span class="card__bottom-address engraved-text"
-                  >358 Exchange Place, New York, N.Y. 100099</span
-                >
-                <span class="card__bottom-contact card__bottom-contact--fax">
-                  <span class="card__bottom-label engraved-text">fax</span>
-                  <span class="card__bottom-value engraved-text"
-                    >212 555 6390</span
-                  >
-                </span>
-                <span class="card__bottom-contact card__bottom-contact--telex">
-                  <span
-                    class="card__bottom-label card__bottom-label--telex engraved-text"
-                    >telex</span
-                  >
-                  <span
-                    class="card__bottom-value card__bottom-value--telex engraved-text"
-                    >10 4534</span
-                  >
-                </span>
-              </span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
+    <main>
+      <section class="panel">
+        <h1>Bateman Card Builder</h1>
+        <p>
+          Edit any of the text fields below, preview the result on the right,
+          then export a ready-to-deploy HTML file for GitHub Pages.
+        </p>
+        <form id="card-form" autocomplete="off"></form>
+        <div class="inline-controls">
+          <input
+            type="text"
+            id="export-filename"
+            value="index.html"
+            placeholder="File name"
+            spellcheck="false"
+          />
+          <button type="button" id="export-button" disabled>
+            Download HTML
+          </button>
+        </div>
+        <small>
+          The downloaded file expects the font, texture, and image assets to sit
+          alongside it (as they do in <code>docs/</code>). Copy the exported
+          file into <code>docs/</code> and commit to update the live site.
+        </small>
+        <div class="status" data-state="loading" id="status-indicator">
+          <span class="loading">Loading template…</span>
+        </div>
+      </section>
+      <section class="preview-panel">
+        <div class="preview-frame-wrapper">
+          <iframe
+            id="preview-frame"
+            title="Card preview"
+            sandbox="allow-same-origin allow-scripts"
+          ></iframe>
+        </div>
+      </section>
+    </main>
+    <iframe
+      id="template-source"
+      src="template.html"
+      hidden
+      aria-hidden="true"
+      tabindex="-1"
+    ></iframe>
     <script>
-      const card = document.querySelector("[data-card]");
-      const cardScene = document.querySelector(".card-scene");
+      const FIELD_CONFIGS = [
+        {
+          id: "phone",
+          label: "Phone number",
+          selector: ".card__phone",
+        },
+        {
+          id: "companyWordLeft",
+          label: "Company word (left)",
+          selector: ".card__company-word",
+          index: 0,
+        },
+        {
+          id: "companyAmpersand",
+          label: "Company ampersand",
+          selector: ".card__company-ampersand",
+        },
+        {
+          id: "companyWordRight",
+          label: "Company word (right)",
+          selector: ".card__company-word",
+          index: 1,
+        },
+        {
+          id: "companyTagline",
+          label: "Company tagline",
+          selector: ".card__company-tagline",
+        },
+        {
+          id: "personFirstName",
+          label: "First name",
+          get(doc) {
+            const first = doc.querySelector(".card__person-first");
+            if (!first) return "";
+            let initial = "";
+            for (const node of first.childNodes) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                const trimmed = node.textContent.trim();
+                if (trimmed.length) {
+                  initial = trimmed[0];
+                  break;
+                }
+              }
+            }
+            const restSpan = first.querySelector(".card__person-first-rest");
+            const rest = restSpan ? restSpan.textContent ?? "" : "";
+            return (initial || "") + rest;
+          },
+          set(doc, value) {
+            const first = doc.querySelector(".card__person-first");
+            if (!first) return;
+            const clean = (value ?? "").trim();
+            const initial = clean.charAt(0);
+            const remainder = clean.slice(1);
 
-      const config = {
-        maxRotateX: 18,
-        maxRotateY: 14,
-        maxRotateZ: 4,
-      };
+            let textNode = null;
+            for (const node of first.childNodes) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                textNode = node;
+                break;
+              }
+            }
+            if (!textNode) {
+              textNode = doc.createTextNode("");
+              first.insertBefore(textNode, first.firstChild);
+            }
+            textNode.textContent = initial;
 
-      function clamp(value, min, max) {
-        return Math.min(Math.max(value, min), max);
+            let restSpan = first.querySelector(".card__person-first-rest");
+            if (!restSpan) {
+              restSpan = doc.createElement("span");
+              restSpan.className = "card__person-first-rest engraved-text";
+              first.appendChild(restSpan);
+            }
+            restSpan.textContent = remainder;
+          },
+        },
+        {
+          id: "personLast",
+          label: "Last name",
+          selector: ".card__person-last",
+        },
+        {
+          id: "title",
+          label: "Title",
+          selector: ".card__title",
+        },
+        {
+          id: "address",
+          label: "Address",
+          selector: ".card__bottom-address",
+          multiline: true,
+        },
+        {
+          id: "faxLabel",
+          label: "Fax label",
+          selector: ".card__bottom-contact--fax .card__bottom-label",
+        },
+        {
+          id: "faxValue",
+          label: "Fax value",
+          selector: ".card__bottom-contact--fax .card__bottom-value",
+        },
+        {
+          id: "telexLabel",
+          label: "Telex label",
+          selector: ".card__bottom-contact--telex .card__bottom-label",
+        },
+        {
+          id: "telexValue",
+          label: "Telex value",
+          selector: ".card__bottom-contact--telex .card__bottom-value",
+        },
+      ];
+
+      const parser = new DOMParser();
+      const statusIndicator = document.getElementById("status-indicator");
+      const form = document.getElementById("card-form");
+      const previewFrame = document.getElementById("preview-frame");
+      const exportButton = document.getElementById("export-button");
+      const filenameInput = document.getElementById("export-filename");
+      const sourceFrame = document.getElementById("template-source");
+
+      let templateHTML = "";
+      let fieldValues = {};
+
+      function setStatus(state, message) {
+        statusIndicator.dataset.state = state;
+        statusIndicator.textContent = message;
       }
 
-      function applyTransform({ x, y }) {
-        const rect = cardScene.getBoundingClientRect();
-        const relativeX = (x - rect.left) / rect.width - 0.5;
-        const relativeY = (y - rect.top) / rect.height - 0.5;
-
-        const rotateY = clamp(
-          relativeX * 2 * config.maxRotateY,
-          -config.maxRotateY,
-          config.maxRotateY
-        );
-        const rotateX = clamp(
-          -relativeY * 2 * config.maxRotateX,
-          -config.maxRotateX,
-          config.maxRotateX
-        );
-        const rotateZ = clamp(
-          relativeX * 2 * config.maxRotateZ,
-          -config.maxRotateZ,
-          config.maxRotateZ
-        );
-
-        card.style.transform = `rotateX(${rotateX.toFixed(
-          2
-        )}deg) rotateY(${rotateY.toFixed(2)}deg) rotateZ(${rotateZ.toFixed(
-          2
-        )}deg)`;
-
-        const shadowX = (rotateY / config.maxRotateY) * 18;
-        const shadowY = (rotateX / config.maxRotateX) * 18;
-        card.style.boxShadow = `${-shadowX.toFixed(1)}px ${shadowY.toFixed(
-          1
-        )}px 45px rgba(47, 43, 37, 0.18)`;
+      function getNode(doc, config) {
+        if (config.selector) {
+          if (typeof config.index === "number") {
+            const nodes = doc.querySelectorAll(config.selector);
+            return nodes[config.index] ?? null;
+          }
+          return doc.querySelector(config.selector);
+        }
+        return null;
       }
 
-      function handlePointerMove(event) {
-        applyTransform({ x: event.clientX, y: event.clientY });
+      function readField(doc, config) {
+        if (typeof config.get === "function") {
+          return config.get(doc);
+        }
+        const node = getNode(doc, config);
+        if (!node) return "";
+        if (config.attr) {
+          return node.getAttribute(config.attr) ?? "";
+        }
+        return node.textContent.trim();
       }
 
-      function handlePointerLeave() {
-        const rect = cardScene.getBoundingClientRect();
-        applyTransform({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
+      function writeField(doc, config, value) {
+        if (typeof config.set === "function") {
+          config.set(doc, value);
+          return;
+        }
+        const node = getNode(doc, config);
+        if (!node) return;
+        if (config.attr) {
+          node.setAttribute(config.attr, value ?? "");
+          return;
+        }
+        node.textContent = value ?? "";
+      }
+
+      function buildDocument(values, { forPreview = false } = {}) {
+        const doc = parser.parseFromString(templateHTML, "text/html");
+        FIELD_CONFIGS.forEach((config) => {
+          const value = values[config.id] ?? "";
+          writeField(doc, config, value);
+        });
+        if (forPreview) {
+          const base = doc.createElement("base");
+          base.setAttribute("href", "./docs/");
+          doc.head.insertBefore(base, doc.head.firstChild);
+        }
+        return doc;
+      }
+
+      function renderPreview() {
+        const doc = buildDocument(fieldValues, { forPreview: true });
+        const serialized = "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
+        previewFrame.srcdoc = serialized;
+      }
+
+      function downloadFile() {
+        const doc = buildDocument(fieldValues);
+        const serialized = "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
+        const blob = new Blob([serialized], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const rawName = (filenameInput.value || "").trim();
+        const base = rawName.length ? rawName : "index";
+        const safeBase = base.replace(/[\\s\\\\/:*?"<>|]+/g, "_");
+        a.download = safeBase.replace(/\.html$/i, "") + ".html";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 0);
+      }
+
+      function createFieldInput(config, value) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "field";
+
+        const label = document.createElement("label");
+        label.setAttribute("for", config.id);
+        label.textContent = config.label;
+        wrapper.appendChild(label);
+
+        const control =
+          config.multiline === true
+            ? document.createElement("textarea")
+            : document.createElement("input");
+        control.id = config.id;
+        control.dataset.field = config.id;
+        control.value = value ?? "";
+        control.autocomplete = "off";
+        control.spellcheck = false;
+        if (config.placeholder) {
+          control.placeholder = config.placeholder;
+        }
+        if (control instanceof HTMLInputElement) {
+          control.type = config.type ?? "text";
+        }
+        wrapper.appendChild(control);
+        return wrapper;
+      }
+
+      function initializeForm(doc) {
+        const fragment = document.createDocumentFragment();
+        FIELD_CONFIGS.forEach((config) => {
+          const value = readField(doc, config);
+          fieldValues[config.id] = value;
+          fragment.appendChild(createFieldInput(config, value));
+        });
+        form.appendChild(fragment);
+        form.addEventListener("input", (event) => {
+          const target = event.target;
+          if (
+            !(
+              target instanceof HTMLInputElement ||
+              target instanceof HTMLTextAreaElement
+            )
+          ) {
+            return;
+          }
+          const field = target.dataset.field;
+          if (!field) return;
+          fieldValues[field] = target.value;
+          renderPreview();
         });
       }
 
-      cardScene.addEventListener("pointermove", handlePointerMove);
-      cardScene.addEventListener("pointerleave", handlePointerLeave);
+      function initialize() {
+        if (!templateHTML) {
+          setStatus(
+            "error",
+            "Could not load template.html. Open this editor via a local web server."
+          );
+          return;
+        }
+        const doc = parser.parseFromString(templateHTML, "text/html");
+        initializeForm(doc);
+        exportButton.disabled = false;
+        renderPreview();
+        setStatus("ready", "Template loaded. You can edit and export now.");
+      }
 
-      handlePointerLeave();
+      exportButton.addEventListener("click", downloadFile);
+
+      sourceFrame.addEventListener("load", () => {
+        try {
+          const doc = sourceFrame.contentDocument;
+          if (!doc) throw new Error("No document");
+          templateHTML = "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
+          initialize();
+        } catch (error) {
+          console.error(error);
+          setStatus(
+            "error",
+            "Unable to access template.html. Try serving this folder with `python -m http.server`."
+          );
+        }
+      });
     </script>
   </body>
 </html>
