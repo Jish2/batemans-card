@@ -48,9 +48,15 @@
         height: calc(480px * 452 / 800);
         padding: 24px 28px;
         position: relative;
-        background: #fbf7ea;
+        background: radial-gradient(
+          circle at 20% 15%,
+          rgba(255, 255, 255, 0.92),
+          rgba(238, 228, 210, 0.98) 42%,
+          rgba(221, 206, 184, 1)
+        );
         border: 1.5px solid rgba(84, 78, 68, 0.2);
-        box-shadow: 0 16px 32px rgba(47, 43, 37, 0.14);
+        box-shadow: 0 16px 42px rgba(47, 43, 37, 0.16),
+          0 8px 18px rgba(47, 43, 37, 0.14);
         transform-style: preserve-3d;
         transition: transform 160ms ease-out, box-shadow 160ms ease-out;
         will-change: transform, box-shadow;
@@ -64,7 +70,7 @@
         background-image: url("./patrick-bateman-business-card.webp");
         background-size: cover;
         background-position: center;
-        opacity: 0.5;
+        opacity: 0;
         mix-blend-mode: multiply;
         pointer-events: none;
         z-index: 0;
@@ -81,6 +87,24 @@
 
       .card__inline {
         white-space: nowrap;
+      }
+
+      .engraved-text {
+        color: transparent;
+        background-color: #2c2925;
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: -0.7px -0.9px 1.4px rgba(34, 28, 24, 0.48),
+          0.7px 0.85px 0 rgba(255, 255, 255, 0.286);
+      }
+
+      .engraved-tight {
+        color: transparent;
+        background-color: #302c29;
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: -0.6px -0.8px 1.2px rgba(34, 28, 24, 0.48),
+          0.6px 0.8px 0 rgba(255, 255, 255, 0.28);
       }
 
       .card__top,
@@ -211,26 +235,32 @@
         <div class="card__overlay" aria-hidden="true"></div>
         <div class="card__inner">
           <div class="card__top">
-            <span class="card__phone card__inline">2125556342</span>
+            <span class="card__phone card__inline engraved-tight"
+              >2125556342</span
+            >
             <div class="card__company">
-              <span class="card__company-name">Pierce &amp; Pierce</span>
-              <span class="card__company-tagline"
+              <span class="card__company-name engraved-text"
+                >Pierce &amp; Pierce</span
+              >
+              <span class="card__company-tagline engraved-text"
                 >Mergers and Acquisitions</span
               >
             </div>
           </div>
           <div class="card__center">
             <div class="card__person">
-              <span class="card__person-first"
+              <span class="card__person-first engraved-text"
                 >P
-                <span class="card__person-first-rest">atrick</span>
+                <span class="card__person-first-rest engraved-text"
+                  >atrick</span
+                >
               </span>
-              <span class="card__person-last">BATEMAN</span>
+              <span class="card__person-last engraved-text">BATEMAN</span>
             </div>
-            <span class="card__title">Vice President</span>
+            <span class="card__title engraved-text">Vice President</span>
           </div>
           <div class="card__bottom">
-            <span class="card__inline"
+            <span class="card__inline engraved-text"
               >358&nbsp;Exchange&nbsp;Place,&nbsp;New&nbsp;York,&nbsp;N.Y.&nbsp;100099&nbsp;FAX&nbsp;212&nbsp;555&nbsp;6390&nbsp;TELEX&nbsp;10&nbsp;4534</span
             >
           </div>
