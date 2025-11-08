@@ -7,7 +7,8 @@
     <style>
       @font-face {
         font-family: "Garamond Classico SC";
-        src: url("./Garamond Classico SC.ttf") format("truetype");
+        src: url("https://card.jgoon.com/Garamond%20Classico%20SC.ttf")
+          format("truetype");
         font-weight: 400;
         font-style: normal;
         font-display: swap;
@@ -39,11 +40,11 @@
         margin-top: 24px;
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New",
           monospace;
-        font-size: 14px;
+        font-size: 12px;
         color: #a1a6aa;
         text-decoration: underline;
-        letter-spacing: 0.04em;
-        text-transform: lowercase;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         text-align: center;
       }
 
@@ -93,7 +94,7 @@
       .card__overlay {
         position: absolute;
         inset: 0;
-        background-image: url("./texture.png");
+        background-image: url("https://card.jgoon.com/texture.png");
         background-size: cover;
         background-position: center;
         opacity: 0.5;
@@ -199,7 +200,7 @@
         font-variant: small-caps;
         letter-spacing: -0.015em;
       }
-      .card__person-first-rest {
+      .card__person-first {
         letter-spacing: -0.02em;
         margin-left: calc(-2px * var(--card-scale));
       }
@@ -227,7 +228,7 @@
       }
       .card__bottom-address {
         letter-spacing: -0.04em;
-        word-spacing: -0.18em;
+        word-spacing: -0.05em;
       }
       .card__bottom-contact {
         display: inline-flex;
@@ -320,11 +321,7 @@
             </div>
             <div class="card__center">
               <div class="card__person">
-                <span class="card__person-first engraved-text"
-                  >P<span class="card__person-first-rest engraved-text"
-                    >atrick</span
-                  ></span
-                >
+                <span class="card__person-first engraved-text">Patrick</span>
                 <span class="card__person-last engraved-text">BATEMAN</span>
               </div>
               <span class="card__title engraved-text">Vice President</span>
