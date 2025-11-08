@@ -28,17 +28,42 @@
         margin: 0;
         min-height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
         background: #ffffff;
         color: #2f2b25;
-        overflow: hidden;
+        overflow-x: hidden;
+      }
+
+      .promo-banner {
+        margin-top: 24px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New",
+          monospace;
+        font-size: 14px;
+        color: #a1a6aa;
+        text-decoration: underline;
+        letter-spacing: 0.04em;
+        text-transform: lowercase;
+        text-align: center;
+      }
+
+      .promo-banner:hover {
+        color: #898e93;
+      }
+
+      .card-shell {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 0 48px;
       }
 
       .card-scene {
         perspective: 1200px;
-        width: 100%;
-        height: 100vh;
+        width: min(100%, 960px);
+        height: max(420px, calc(100vh - 180px));
         display: flex;
         align-items: center;
         justify-content: center;
@@ -268,61 +293,68 @@
     </style>
   </head>
   <body>
-    <div class="card-scene">
-      <article class="card" data-card>
-        <div class="card__overlay" aria-hidden="true"></div>
-        <div class="card__inner">
-          <div class="card__top">
-            <span class="card__phone card__inline engraved-tight"
-              >212 555 6342</span
-            >
-            <div class="card__company">
-              <div class="card__company-line">
-                <span class="card__company-word engraved-text">Pierce</span>
-                <span class="card__company-ampersand engraved-text">&amp;</span>
-                <span class="card__company-word engraved-text">Pierce</span>
+    <a class="promo-banner" href="https://card.jgoon.com"
+      >create your own bateman card here</a
+    >
+    <div class="card-shell">
+      <div class="card-scene">
+        <article class="card" data-card>
+          <div class="card__overlay" aria-hidden="true"></div>
+          <div class="card__inner">
+            <div class="card__top">
+              <span class="card__phone card__inline engraved-tight"
+                >212 555 6342</span
+              >
+              <div class="card__company">
+                <div class="card__company-line">
+                  <span class="card__company-word engraved-text">Pierce</span>
+                  <span class="card__company-ampersand engraved-text"
+                    >&amp;</span
+                  >
+                  <span class="card__company-word engraved-text">Pierce</span>
+                </div>
+                <span class="card__company-tagline engraved-text"
+                  >Mergers and Acquisitions</span
+                >
               </div>
-              <span class="card__company-tagline engraved-text"
-                >Mergers and Acquisitions</span
-              >
+            </div>
+            <div class="card__center">
+              <div class="card__person">
+                <span class="card__person-first engraved-text"
+                  >P<span class="card__person-first-rest engraved-text"
+                    >atrick</span
+                  ></span
+                >
+                <span class="card__person-last engraved-text">BATEMAN</span>
+              </div>
+              <span class="card__title engraved-text">Vice President</span>
+            </div>
+            <div class="card__bottom">
+              <span class="card__inline engraved-text card__bottom-line">
+                <span class="card__bottom-address engraved-text"
+                  >358 Exchange Place, New York, N.Y. 100099</span
+                >
+                <span class="card__bottom-contact card__bottom-contact--fax">
+                  <span class="card__bottom-label engraved-text">fax</span>
+                  <span class="card__bottom-value engraved-text"
+                    >212 555 6390</span
+                  >
+                </span>
+                <span class="card__bottom-contact card__bottom-contact--telex">
+                  <span
+                    class="card__bottom-label card__bottom-label--telex engraved-text"
+                    >telex</span
+                  >
+                  <span
+                    class="card__bottom-value card__bottom-value--telex engraved-text"
+                    >10 4534</span
+                  >
+                </span>
+              </span>
             </div>
           </div>
-          <div class="card__center">
-            <div class="card__person">
-              <span class="card__person-first engraved-text"
-                >P<span class="card__person-first-rest engraved-text"
-                  >atrick</span
-                ></span
-              >
-              <span class="card__person-last engraved-text">BATEMAN</span>
-            </div>
-            <span class="card__title engraved-text">Vice President</span>
-          </div>
-          <div class="card__bottom">
-            <span class="card__inline engraved-text card__bottom-line">
-              <span class="card__bottom-address engraved-text"
-                >358 Exchange Place, New York, N.Y. 100099</span
-              >
-              <span class="card__bottom-contact card__bottom-contact--fax">
-                <span class="card__bottom-label engraved-text">fax</span>
-                <span class="card__bottom-value engraved-text"
-                  >212 555 6390</span
-                >
-              </span>
-              <span class="card__bottom-contact card__bottom-contact--telex">
-                <span
-                  class="card__bottom-label card__bottom-label--telex engraved-text"
-                  >telex</span
-                >
-                <span
-                  class="card__bottom-value card__bottom-value--telex engraved-text"
-                  >10 4534</span
-                >
-              </span>
-            </span>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
     <script>
       const card = document.querySelector("[data-card]");
